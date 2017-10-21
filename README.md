@@ -13,9 +13,10 @@ This is based on [CIM cmdlets][cim].
 
 ## Usage
 
-- To start using the functionality of `CimPSDrive`, first create a PSDrive
+- To start using the functionality of `CimPSDrive`, import the `CimPSDrive` module and create a PSDrive
 
     ```powershell
+    Import-Module -Name CimPSDrive -Verbose
     New-PSDrive -Name CIM -PSProvider SHiPS -Root CIMPSDrive#CMRoot
     ```
 
@@ -77,6 +78,7 @@ This is based on [CIM cmdlets][cim].
     Now you can navigate the CIM hierarchy on remoteMachine as well.
 
 - Use `Disconnect-CIM` command to disconnect from the remote machines
+    > Note: This command only  works from within the PSDrive created above
 
 ## Installing CimPSDrive
 
