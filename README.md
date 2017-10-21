@@ -1,14 +1,98 @@
+# CimPSDrive
 
-# Contributing
+CimPSDrive provider is a [SHiPS](https://github.com/PowerShell/SHiPS) based PowerShell provider for navigation and discovery of CIM namespaces.
+This is based on [CIM cmdlets][cim].
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+## Supported Platform
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+- PowerShell 5.1 (or later), which is shipped in Windows 10, Windows Server 2016, or [WMF 5.1][wmf51]
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## Dependencies
+
+[SHiPS](https://github.com/PowerShell/SHiPS) PowerShell module is required.
+
+## Usage
+
+- To start using the functionality of `CimPSDrive`, first create a PSDrive
+
+    ```powershell
+    New-PSDrive -Name CIM -PSProvider SHiPS -Root CIMPSDrive#CMRoot
+    ```
+
+- You can `cd` into a specific namespace and discover the classes
+    ```powershell
+    # List the classes under cimv2 namespace on local machine
+
+    CIM:\localhost\cimv2> dir
+
+    # Output will be similar to the following
+        Directory: CIM:\localhost\cimv2
+
+    Mode Type      Name
+    ---- ----      ----
+    +    Namespace Applications
+    +    Namespace mdm
+    +    Namespace power
+    +    Namespace Security
+    +    Namespace sms
+    +    Namespace TerminalServices
+    +    Class     CCM_ComputerSystemExtended
+    +    Class     CCM_LogicalMemoryConfiguration
+    +    Class     CCM_OperatingSystemExtended
+    +    Class     CIM_Action
+    ...
+    ...
+    ```
+
+- Using `dir` or `ls`, you can find instances of a class
+
+    ```powershell
+    # Find the details about operating system
+    CIM:\localhost\cimv2\Win32_OperatingSystem> dir
+
+    # Output will be similar to the following
+    SystemDirectory     Organization BuildNumber RegisteredUser SerialNumber            Version    PSComputerName
+    ---------------     ------------ ----------- -------------- ------------            -------    --------------
+    C:\WINDOWS\system32              16299       Windows User   00329-00000-00003-AA424 10.0.16299 localhost
+    ```
+
+- To connect to remote machines, use the `Connect-CIM` command
+    > Note: This command only  works from within the PSDrive created above
+
+    ```powershell
+    # Connect to a remote machine
+    Connect-CIM -ComputerName remoteMachine
+
+    # Now you can see another entry under the PSDrive root
+    CIM:\localhost\cimv2\Win32_OperatingSystem> dir /
+
+        Directory: CIM:
+
+    Mode Type Name
+    ---- ---- ----
+    +         localhost
+    +         remoteMachine
+    ```
+
+    Now you can navigate the CIM hierarchy on remoteMachine as well.
+
+- Use `Disconnect-CIM` command to disconnect from the remote machines
+
+## Installing CimPSDrive
+
+- Download from the [PowerShell Gallery][psgallery]
+- `git clone` https://github.com/PowerShell/CimPSDrive.git
+
+## Developing and Contributing
+
+Please follow [the PowerShell Contribution Guide][contribution] for how to contribute.
+
+## Legal and Licensing
+
+CimPSDrive is under the [MIT license][license].
+
+[cim]: https://docs.microsoft.com/en-us/powershell/module/cimcmdlets
+[wmf51]: https://www.microsoft.com/en-us/download/details.aspx?id=54616
+[psgallery]: https://www.powershellgallery.com/packages/CimPSDrive
+[contribution]: https://github.com/PowerShell/PowerShell/blob/master/.github/CONTRIBUTING.md
+[license]: LICENSE.txt
