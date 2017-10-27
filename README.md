@@ -1,7 +1,7 @@
 # CimPSDrive
 
-CimPSDrive provider is a [SHiPS](https://github.com/PowerShell/SHiPS) based PowerShell provider for navigation and discovery of CIM namespaces.
-This is based on [CIM cmdlets][cim].
+The CimPSDrive provider allows easy navigation and discovery of CIM namespaces, including those in WMI.
+CimPSDrive is a [SHiPS](https://github.com/PowerShell/SHiPS) based PowerShell provider and is based on [CIM cmdlets][cim].
 
 ## Supported Platform
 
