@@ -174,9 +174,11 @@ function Disconnect-CIM{
         [Parameter(Mandatory)]
         [string]$ComputerName
     )
-    if(Get-CMSession -ComputerName $ComputerName){
+    $sessionToRemove = Get-CMSession -ComputerName $ComputerName
+
+    if($sessionToRemove){
         if(([CMRoot]::Sessions).Remove($sessionToRemove)){
-            Remove-CimSession -CimSession $sessionToRemove
+            Remove-CimSession -CimSession $sessionToRemove -ErrorAction Stop
         }
     }
     else{
