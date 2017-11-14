@@ -103,7 +103,7 @@ class CMNamespace : SHiPSDirectory
                               'WMI_Extension'
                             )
 
-        $classnames = (Get-CimClass -Namespace $this.Namespace).CimClassName | Sort-Object
+        $classnames = (Get-CimClass -Namespace $this.Namespace -CimSession $this.CimSession).CimClassName | Sort-Object
 
         foreach($classname in $classnames){
             if(-not ($classname.StartsWith('__')) -and ($classNamesToSkip -notcontains $classname)){
