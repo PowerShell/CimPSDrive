@@ -3,6 +3,8 @@
 The CimPSDrive provider allows easy navigation and discovery of CIM namespaces, including those in WMI.
 CimPSDrive is a [SHiPS](https://github.com/PowerShell/SHiPS) based PowerShell provider and is based on [CIM cmdlets][cim].
 
+![CimPSDrive in Action](media/intro.gif)
+
 ## Supported Platform
 
 - PowerShell 5.1 (or later), which is shipped in Windows 10, Windows Server 2016, or [WMF 5.1][wmf51]
